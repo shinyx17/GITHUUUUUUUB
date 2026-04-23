@@ -1,0 +1,490 @@
+/* --- Estilos Globales --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2E1A47; /* morado oscuro */
+    --accent: #F2B705;  /* amarillo/dorado */
+    --white: #FFFFFF;
+    --bg: #1a1a1a;
+    --role-user: #1E90FF;
+    --role-coach: #2E8B57;
+    --role-admin: #B22222;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg); /* Fondo oscuro industrial */
+    color: #eeeeee;
+    min-height: 100vh;
+}
+
+/* Center only auth pages (login) */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* --- Contenedor Principal (El recuadro de tu boceto) --- */
+.login-box {
+    background-color: hsl(0, 0%, 15%); /* Un tono más claro para el panel */
+    width: 90%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border: 2px solid #333;
+    position: relative;
+    overflow: hidden; /* Para que el efecto de la esquina no se salga */
+}
+
+/* --- Efectos de Esquina (Simulando el rayado del boceto) --- */
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 40px;
+    height: 40px;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--accent), /* Color de acento */
+        var(--accent) 2px,
+        transparent 2px,
+        transparent 8px
+    );
+}
+
+.login-box::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--accent),
+        var(--accent) 2px,
+        transparent 2px,
+        transparent 8px
+    );
+}
+
+/* --- Estilos del Logo --- */
+.site-header .logo-container {
+    margin-top: 4px; /* bajar el logo ligeramente en headers comunes */
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-placeholder {
+    display: inline-block;
+    padding: 10px 20px;
+    /* border removed to match requested look */
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.logo-placeholder img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* reduce logo slightly so header doesn't look empty */
+    max-height: 72px;
+}
+
+/* --- Header / Navigation --- */
+.site-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.25), rgba(0,0,0,0.0));
+    border-bottom: 3px solid rgba(255,255,255,0.03);
+}
+
+/* Franja superior de color para hacer más evidente la identidad por rol */
+.site-header { position: relative; }
+.site-header::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 8px;
+    background: transparent;
+}
+.site-header.user-theme::before { background: var(--role-user); }
+.site-header.coach-theme::before { background: var(--role-coach); }
+.site-header.admin-theme::before { background: var(--role-admin); }
+
+.logo-container { flex: 0 0 auto; }
+
+.main-nav {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex: 1; /* permitir que la navegación se centre */
+    justify-content: center; /* centrar las opciones horizontalmente */
+}
+
+.site-header.edit-profile .main-nav {
+    justify-content: flex-end;
+}
+
+.main-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.main-nav a.active {
+    /* El estado activo debe ser sutil, sin mostrar la línea de hover */
+    background: rgba(255,255,255,0.04);
+    box-shadow: none;
+}
+.main-nav a:hover {
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    border-bottom: 3px solid var(--accent);
+}
+
+.header-actions { margin-left: auto; display:flex; gap:8px; }
+.btn-small { background: transparent; color: var(--white); border:1px solid rgba(255,255,255,0.08); padding:6px 10px; border-radius:6px; cursor:pointer; font-family: 'Oswald', sans-serif; font-weight:700; }
+
+/* Remove focus outlines for buttons to avoid persistent hover-looking state */
+.btn-ingresar:focus, .primary-btn:focus, .accent-btn:focus, .reserve-btn:focus, .btn-small:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* --- Page layout --- */
+.container { max-width:1200px; margin:40px auto; padding:0 24px; }
+.simple-form { display:flex; flex-direction:column; gap:12px; max-width:420px; }
+.simple-form { margin: 0 auto; }
+.simple-form label { display:flex; flex-direction:column; font-weight:700; color:#ddd; }
+.simple-form input { padding:10px; border-radius:4px; border:1px solid #444; background:#222; color:#fff; }
+.muted { color:#aaa; margin-top:12px; text-align:center; }
+
+.grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.card { background:#2b2b2b; padding:9px; border-radius:6px; border:1px solid #333; color:#eee; }
+.card h2 { margin-bottom:10px; font-size:18px; }
+.card h3 { margin-bottom:10px; font-size:18px; }
+.info-cards { display:flex; gap:10px; margin-top:10px; }
+.info-cards .mini { background:#222; padding:8px 12px; border-radius:6px; }
+
+/* Dashboard user specific styles (scoped) */
+.dashboard-layout .dashboard-top { display:grid; grid-template-columns: 320px auto 240px; gap:20px; align-items:start; margin-bottom:18px; }
+.dashboard-layout .profile-card { display:flex; flex-direction:column; gap:16px; }
+.dashboard-layout .profile-card h3 { margin-bottom: 0; }
+.dashboard-layout .profile-card .profile-contents { display:grid; grid-template-columns: 96px 1fr; gap:16px; align-items:start; }
+.dashboard-layout .profile-card .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.dashboard-layout .profile-card .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.dashboard-layout .profile-card .info { display:flex; flex-direction:column; gap:10px; }
+.dashboard-layout .profile-card .profile-contents p { margin:0; line-height:1.45; }
+.dashboard-layout .profile-card .objectives { margin:0; padding-left: 18px; color:#ddd; list-style: disc inside; }
+
+.dashboard-layout .progress-card { max-width: 420px; margin-inline: auto; }
+.dashboard-layout .progress-card .progress-inner { display:flex; gap:18px; align-items:center; }
+.donut { width:140px; height:140px; }
+.donut .donut-ring { fill: none; stroke: #222; stroke-width: 3.5; }
+.donut .donut-segment { fill: none; stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.donut-number { font-size: 6px; text-anchor:middle; fill:#fff; font-weight:700; }
+.progress-list p { margin:0 0 6px 0; }
+
+.classes-card .class-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+.reserve-btn { background:var(--primary); color:var(--white); border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; font-family: 'Oswald', sans-serif; text-transform:uppercase; box-shadow: 0 6px 14px rgba(46,26,71,0.22); }
+.classes-card .reserve-btn { min-width: 140px; width: 140px; white-space: nowrap; }
+.reserve-btn:hover { transform: translateY(-1px); }
+
+/* Botón de acción primaria (mismo estilo que 'Reservar') */
+.primary-btn { background:var(--primary); color:var(--white); border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; font-family: 'Oswald', sans-serif; text-transform:uppercase; box-shadow: 0 6px 14px rgba(46,26,71,0.22); }
+.primary-btn:hover { transform: translateY(-1px); }
+
+/* Acción de acento (amarillo) usada para buscar/configurar en admin */
+.accent-btn { background:var(--accent); color:var(--primary); border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; font-family: 'Oswald', sans-serif; text-transform:uppercase; box-shadow: 0 6px 12px rgba(242,183,5,0.12); }
+.accent-btn:hover { transform: translateY(-1px); }
+
+/* Estado 'reservado' para botones de reserva (alternable) */
+.reserve-btn.reserved {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.benefits-list {
+    padding-left: 22px;
+    margin-left: 4px;
+}
+
+.classes-table table { width:100%; border-collapse:collapse; color:#ddd; }
+.classes-table th, .classes-table td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,0.03); text-align:left; }
+
+@media (max-width:980px) {
+    .dashboard-layout .dashboard-top { grid-template-columns: 1fr; }
+}
+
+/* Coach dashboard styles */
+.coach-layout .coach-panel { margin-bottom:18px; }
+.coach-layout .coach-top { display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start; }
+.coach-layout .students-card ul { list-style:none; display:flex; flex-direction:column; gap:12px; padding:0; margin:0; }
+.coach-layout .students-card li { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+.coach-layout .stu .stu-name { font-weight:700; }
+.coach-layout .schedule-card table { width:100%; border-collapse:collapse; }
+.coach-layout .schedule-card th, .coach-layout .schedule-card td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:left; }
+.btn-outline { background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:6px; cursor:pointer; }
+.btn-outline:hover { background: rgba(255,255,255,0.03); }
+
+@media (max-width:980px) {
+    .coach-layout .coach-top { grid-template-columns: 1fr; }
+}
+
+/* Admin dashboard styles */
+.admin-layout .admin-panel { margin-bottom: 20px; }
+.admin-layout .admin-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; align-items:start; }
+.admin-layout .users-management .search-row { display:flex; gap:8px; margin-bottom:12px; }
+.admin-layout .users-management input[type="search"] { flex:1; padding:8px; border-radius:6px; border:1px solid #333; background:#111; color:#fff; }
+.admin-layout .user-list { display:flex; flex-direction:column; gap:8px; }
+.admin-layout .user-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+.admin-layout .stats-system table { width:100%; border-collapse:collapse; }
+.admin-layout .stats-system th, .admin-layout .stats-system td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:left; }
+.admin-layout .reports .report-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+
+@media (max-width:980px) {
+    .admin-layout .admin-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Theme variants for dashboards --- */
+.user-theme { background: linear-gradient(90deg, rgba(30,144,255,0.12), rgba(0,0,0,0)); }
+.coach-theme { background: linear-gradient(90deg, rgba(34,139,34,0.12), rgba(0,0,0,0)); }
+.admin-theme { background: linear-gradient(90deg, rgba(178,34,34,0.12), rgba(0,0,0,0)); }
+
+/* Accent colors used in small places */
+.theme-accent-user { color:#1E90FF; }
+.theme-accent-coach { color:#2E8B57; }
+.theme-accent-admin { color:#B22222; }
+
+@media (max-width:720px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .site-header { flex-direction: column; align-items: flex-start; }
+    .header-actions { margin-left: 0; }
+}
+
+/* --- Título Login --- */
+h1 {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+/* --- Formularios e Inputs --- */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #bbbbbb;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+/* Estilos especiales para inputs de email con sufijo */
+.input-group > div[style*="display: flex"] input[type="text"] {
+    width: auto;
+    flex: 1;
+    margin-right: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent); /* Resaltado al hacer clic */
+}
+
+/* --- Selects (para cambiar roles) --- */
+select {
+    padding: 10px 12px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+select option {
+    background-color: #333;
+    color: #ffffff;
+}
+
+/* --- Botón Ingresar --- */
+.btn-ingresar {
+    padding: 12px 20px;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: var(--primary);
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.08s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.35);
+}
+
+.btn-ingresar:hover { background-color: #e0a500; }
+.btn-ingresar:active { transform: translateY(1px); }
+
+/* Center login button on auth pages and avoid full width */
+.auth-page .btn-ingresar { display:block; width: 220px; max-width:80%; margin: 12px auto 0; }
+
+/* --- Mensaje de Error --- */
+.error-message {
+    margin-top: 15px;
+    padding: 12px 15px;
+    background-color: #8B0000;
+    border: 1px solid #FF0000;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Divisor y Enlaces --- */
+.divider {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 30px 0;
+}
+
+.footer-links {
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-links a {
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+.separator {
+    color: #444;
+    margin: 0 10px;
+}
+
+.btn-registrar {
+    font-weight: 700;
+    color: var(--accent) !important; /* Destacamos el enlace de registro */
+}
+
+/* --- Colores de Roles (para parpadeo en admin) --- */
+.role-highlight-user {
+    animation: flashUser 0.8s ease-in-out 3;
+}
+
+.role-highlight-coach {
+    animation: flashCoach 0.8s ease-in-out 3;
+}
+
+.role-highlight-admin {
+    animation: flashAdmin 0.8s ease-in-out 3;
+}
+
+@keyframes flashUser {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #1E90FF;
+        color: #ffffff;
+    }
+}
+
+@keyframes flashCoach {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #2E8B57;
+        color: #ffffff;
+    }
+}
+
+@keyframes flashAdmin {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #B22222;
+        color: #ffffff;
+    }
+}

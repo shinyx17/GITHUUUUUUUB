@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Coach - SportClub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/login.css">
+    <script src="users.js"></script>
+</head>
+<body class="dashboard coach">
+    <header class="site-header coach-theme">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img src="CSS/logo_empresa_letra_v1.png" alt="SportClub logo">
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="dashboard_coach.html">Inicio</a>
+            <a href="dashboard_coach.html#alumnos">Mis Alumnos</a>
+            <a href="dashboard_coach.html#clases">Clases</a>
+        </nav>
+        <div class="header-actions">
+            <a class="btn-small" href="edit_profile.html">Editar perfil</a>
+            <a class="btn-small" href="login.html" onclick="logout()">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="container coach-layout">
+        <header class="coach-panel card">
+            <h2>Panel de Entrenador</h2>
+            <p id="welcome-message">Bienvenido, Coach</p>
+        </header>
+
+        <div class="coach-top">
+            <section class="card students-card">
+                <h3>Mis Alumnos</h3>
+                <ul>
+                    <li>
+                        <div class="stu">
+                            <div class="stu-name">Max Verstappen</div>
+                            <div class="stu-email">maxv3@sportclub.cl</div>
+                        </div>
+                        <button class="primary-btn">Ver Progreso</button>
+                    </li>
+                    <li>
+                        <div class="stu">
+                            <div class="stu-name">Fernando Alonso</div>
+                            <div class="stu-email">falonso14@sportclub.cl</div>
+                        </div>
+                        <button class="primary-btn">Ver Progreso</button>
+                    </li>
+                    <li>
+                        <div class="stu">
+                            <div class="stu-name">Lando Norris</div>
+                            <div class="stu-email">landon4@sportclub.cl</div>
+                        </div>
+                        <button class="primary-btn">Ver Progreso</button>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="card schedule-card">
+                <h3>Mi Horario</h3>
+                <table>
+                    <thead>
+                        <tr><th>Día</th><th>Clase</th><th>Hora</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lunes</td><td>Spinning</td><td>18:00</td><td><button class="primary-btn">Ver Detalle</button></td></tr>
+                        <tr><td>Martes</td><td>Funcional</td><td>19:00</td><td><button class="primary-btn">Ver Detalle</button></td></tr>
+                        <tr><td>Miércoles</td><td>CrossFit</td><td>11:00</td><td><button class="primary-btn">Ver Detalle</button></td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Mostrar nombre del usuario logueado
+        const user = getLoggedInUser();
+        if (user) {
+            document.getElementById('welcome-message').innerHTML = `Bienvenido, Coach <strong>${user.name}</strong>`;
+        } else {
+            // Si no hay usuario logueado, redirigir a login
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

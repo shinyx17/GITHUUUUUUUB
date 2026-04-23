@@ -1,0 +1,8 @@
+Gemini: diseño de la pagina web creando el estilo de la pagina (CSS)
+
+Copilot: ayuda en la estructura de la web, correciones, redirecciones y aplicacion de diseño web
+
+contraseñas DE EJEMPLO para probar redirecciones y funcionalidad
+- maxv3@sportclub.cl            alumnsport
+- lhamilton44@sportclub.cl      coachsport
+- opiastri81@sportclub.cl       adminsport

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Usuario - SportClub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/login.css">
+    <script src="users.js"></script>
+</head>
+<body class="dashboard user">
+    <header class="site-header user-theme">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img src="CSS/logo_empresa_letra_v1.png" alt="SportClub logo">
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="dashboard_user.html">Inicio</a>
+            <a href="dashboard_user.html#reservas">Reservas</a>
+            <a href="dashboard_user.html#perfil">Perfil</a>
+        </nav>
+        <div class="header-actions">
+            <a class="btn-small" href="edit_profile.html">Editar perfil</a>
+            <a class="btn-small" href="login.html" onclick="logout()">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="container dashboard-layout">
+        <div class="dashboard-top">
+            <aside class="card profile-card" id="perfil">
+                <h3>Mi Perfil</h3>
+                <div class="profile-contents">
+                    <div class="avatar">
+                        <img src="CSS/profile_image.jpg" alt="Foto de perfil">
+                    </div>
+                    <div class="info">
+                        <p id="user-name"><strong>Nombre:</strong> Usuario</p>
+                        <p id="user-email"><strong>Email:</strong> email@sportclub.cl</p>
+                        <p><strong>Objetivos personales:</strong></p>
+                        <ul class="objectives">
+                            <li>Mejorar resistencia</li>
+                            <li>Perder grasa</li>
+                            <li>Aumentar fuerza</li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="card progress-card">
+                <h3>Progreso</h3>
+                <div class="progress-inner">
+                    <!-- SVG de donut simple -->
+                    <svg viewBox="0 0 36 36" class="donut">
+                        <path class="donut-ring" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        <path class="donut-segment" stroke-dasharray="65 35" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        <g class="donut-text">
+                            <text x="18" y="20" class="donut-number">65%</text>
+                        </g>
+                    </svg>
+                    <div class="progress-list">
+                        <p><strong>Avance</strong></p>
+                        <ul>
+                            <li>Asistencias: 8 / 12</li>
+                            <li>Objetivos semanales: 3/4</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="card classes-card">
+                <h3>Clases Disponibles</h3>
+                <div class="class-item">Spinning <button class="reserve-btn">Reservar</button></div>
+                <div class="class-item">CrossFit <button class="reserve-btn">Reservar</button></div>
+                <div class="class-item">HIIT <button class="reserve-btn">Reservar</button></div>
+            </aside>
+        </div>
+
+        <section class="card classes-table">
+            <h3>Clases Disponibles</h3>
+            <table>
+                <thead>
+                    <tr><th>Clase</th><th>Día / Hora</th><th>Acción</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Spinning</td><td>Lunes 18:00 / 10:00</td><td><button class="reserve-btn">Reservar</button></td></tr>
+                    <tr><td>CrossFit</td><td>Miércoles 10:00</td><td><button class="reserve-btn">Reservar</button></td></tr>
+                    <tr><td>Boxeo</td><td>Viernes 12:00</td><td><button class="reserve-btn">Reservar</button></td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script>
+        // Mostrar nombre del usuario logueado
+        const user = getLoggedInUser();
+        if (user) {
+            document.getElementById('user-name').innerHTML = `<strong>Nombre:</strong> ${user.name}`;
+            document.getElementById('user-email').innerHTML = `<strong>Email:</strong> ${user.email}`;
+        } else {
+            // Si no hay usuario logueado, redirigir a login
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script>
+        // Alternar estado de reserva: cambiar texto y clase 'reserved'
+        (function(){
+            function toggleButton(btn){
+                var isReserved = btn.classList.toggle('reserved');
+                btn.textContent = isReserved ? 'Reservado' : 'Reservar';
+            }
+
+            document.querySelectorAll('.reserve-btn').forEach(function(b){
+                // set initial label in case markup changes
+                if(!b.textContent.trim()) b.textContent = 'Reservar';
+                b.addEventListener('click', function(e){
+                    e.preventDefault();
+                    toggleButton(b);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

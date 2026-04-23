@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - SportClub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/login.css">
+    <script src="users.js"></script>
+</head>
+<body>
+    <header class="site-header user-theme">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img src="CSS/logo_empresa_letra_v1.png" alt="SportClub logo">
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="login.html">Iniciar sesión</a>
+            <a href="register.html" class="active">Registro</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Crear cuenta</h1>
+        <form id="register-form" class="simple-form">
+            <label>Nombre completo
+                <input type="text" name="name" placeholder="Tu nombre" required>
+            </label>
+            <label>Correo
+                <div style="display: flex; align-items: center;">
+                    <input type="text" name="email" placeholder="nombre" required>
+                    <span style="margin-left: 5px; font-size: 14px;">@sportclub.cl</span>
+                </div>
+            </label>
+            <label>Contraseña
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </label>
+            <label>Información adicional (opcional)
+                <input type="text" name="info" placeholder="Deporte / interés">
+            </label>
+            <button type="submit" class="btn-ingresar">Registrar</button>
+        </form>
+
+        <script>
+            window.addEventListener('load', function(){
+                try{ document.activeElement.blur(); }catch(e){}
+            });
+
+            // Registro de usuario
+            document.getElementById('register-form').addEventListener('submit', function(e){
+                e.preventDefault();
+                const form = this;
+                if(!form.checkValidity()){ form.reportValidity(); return; }
+                const name = (form.name.value || '').trim();
+                const emailInput = (form.email.value || '').trim().toLowerCase();
+                const password = (form.password.value || '').trim();
+                if(!name || !emailInput || !password){ alert('Por favor completa todos los campos'); return; }
+                const email = emailInput + '@sportclub.cl';
+
+                const currentUsers = loadUsersFromLocalStorage();
+                if(currentUsers.some(u => u.email === email)){
+                    alert('El correo ya está registrado');
+                    return;
+                }
+
+                // Agregar nuevo usuario con rol 'user'
+                const newUser = { email: email, password: password, role: 'user', name: name };
+                currentUsers.push(newUser);
+                localStorage.setItem('users', JSON.stringify(currentUsers));
+
+                alert('Registro exitoso. Ahora puedes iniciar sesión.');
+                window.location.href = 'login.html';
+            });
+        </script>
+        <p class="muted">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+    </main>
+</body>
+</html>
