@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Coach - SportClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/login.css">
-    <script src="users.js"></script>
+    <script src="js/api/config.js"></script>
+    <script src="js/auth/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="dashboard coach">
     <header class="site-header coach-theme">
@@ -77,13 +80,12 @@
     </main>
 
     <script>
-        // Mostrar nombre del usuario logueado
+        // Verificar acceso y mostrar nombre del usuario logueado
+        if (!checkRoleAccess('coach')) return;
+
         const user = getLoggedInUser();
         if (user) {
             document.getElementById('welcome-message').innerHTML = `Bienvenido, Coach <strong>${user.name}</strong>`;
-        } else {
-            // Si no hay usuario logueado, redirigir a login
-            window.location.href = 'login.html';
         }
     </script>
 </body>

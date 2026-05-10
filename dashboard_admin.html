@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - SportClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/login.css">
     <script src="users.js"></script>
 </head>
@@ -35,8 +36,8 @@
         <div class="admin-grid">
             <section class="card users-management">
                 <h3>Gestión de Usuarios</h3>
-                <table>
-                    <thead><tr><th>Nombre</th><th>Email</th><th>Rol Actual</th><th>Cambiar a</th><th></th></tr></thead>
+                <table class="table table-striped">
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Fecha</th><th>Acciones</th></tr></thead>
                     <tbody id="users-table-body">
                         <!-- Se llena dinámicamente con JavaScript -->
                     </tbody>
@@ -59,64 +60,12 @@
         </div>
     </main>
 
-    <script>
-        // Mostrar nombre del usuario logueado
-        const user = getLoggedInUser();
-        if (user) {
-            document.getElementById('welcome-message').innerHTML = `Bienvenido, Admin <strong>${user.name}</strong>`;
-        } else {
-            // Si no hay usuario logueado, redirigir a login
-            window.location.href = 'login.html';
-        }
-
-        // Cargar usuarios en la tabla
-        function loadUsersTable() {
-            const currentUsers = loadUsersFromLocalStorage();
-            const tbody = document.getElementById('users-table-body');
-            tbody.innerHTML = '';
-
-            currentUsers.forEach(u => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${u.name}</td>
-                    <td>${u.email}</td>
-                    <td>${u.role}</td>
-                    <td>
-                        <select class="role-select" data-email="${u.email}">
-                            <option value="user" ${u.role === 'user' ? 'selected' : ''}>Usuario</option>
-                            <option value="coach" ${u.role === 'coach' ? 'selected' : ''}>Coach</option>
-                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
-                        </select>
-                    </td>
-                    <td><button class="primary-btn update-role-btn" data-email="${u.email}">Guardar</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-
-            // Agregar event listeners a los botones
-            document.querySelectorAll('.update-role-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const email = this.getAttribute('data-email');
-                    const select = document.querySelector(`.role-select[data-email="${email}"]`);
-                    const newRole = select.value;
-                    const row = this.closest('tr');
-                    
-                    if (updateUserRole(email, newRole)) {
-                        // Agregar clase de animación según el rol
-                        row.classList.add(`role-highlight-${newRole}`);
-                        
-                        // Después de que termine la animación (2.4s = 0.8s * 3 flashes), actualizar la tabla
-                        setTimeout(() => {
-                            row.classList.remove(`role-highlight-${newRole}`);
-                            loadUsersTable();
-                        }, 2400);
-                    }
-                });
-            });
-        }
-
-        // Cargar tabla al iniciar
-        loadUsersTable();
-    </script>
+    <script src="js/api/config.js"></script>
+    <script src="js/auth/auth.js"></script>
+    <script src="js/api/auth.js"></script>
+    <script src="js/api/users.js"></script>
+    <script src="js/utils/ui.js"></script>
+    <script src="js/admin/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
