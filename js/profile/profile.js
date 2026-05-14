@@ -74,12 +74,12 @@ async function handleProfileUpdate(e) {
     if (hasError) return;
 
     // Update profile
-    const result = await updateProfile({ name, email });
+    const result = await updateProfile({ full_name: name, email });
 
     if (result.success) {
         showAlert('Perfil actualizado exitosamente', 'success');
-        // Update localStorage user
-        localStorage.setItem('loggedInUser', JSON.stringify(result.user));
+        setLoggedInUser(result.user);
+        loadProfile();
     } else {
         showAlert(result.message, 'danger');
     }

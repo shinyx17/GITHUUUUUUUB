@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
 
         const name = registerForm.name.value.trim();
-        const emailInput = registerForm.email.value.trim().toLowerCase();
+        const email = registerForm.email.value.trim().toLowerCase();
         const password = registerForm.password.value.trim();
         const confirmPassword = registerForm.confirmPassword ? registerForm.confirmPassword.value.trim() : password;
 
@@ -25,8 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hasError = true;
         }
 
-        const email = emailInput + '@sportclub.cl';
-        if (!emailInput) {
+        if (!email) {
             showInputError(registerForm.email, 'El email es requerido');
             hasError = true;
         } else if (!isValidEmail(email)) {

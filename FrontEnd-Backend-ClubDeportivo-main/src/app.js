@@ -15,15 +15,15 @@ app.get('/', (req, res) => {
     ok: true,
     message: 'API de usuarios funcionando.',
     docs: {
-      login: 'POST /api/auth/login',
-      register: 'POST /api/auth/register',
-      me: 'GET /api/auth/me',
-      users: 'GET /api/users'
+      login: 'POST /auth/login',
+      register: 'POST /auth/register',
+      me: 'GET /auth/me',
+      users: 'GET /users'
     }
   });
 });
 
-app.use('/api', routes);
+app.use('/', routes);
 app.use(notFound);
 app.use(errorHandler);
 

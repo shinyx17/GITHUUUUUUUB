@@ -17,11 +17,13 @@ async function login(email, password) {
             throw new Error(data.message || 'Error en el login');
         }
 
-        // Guardar token y usuario
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('loggedInUser', JSON.stringify(data.data.user));
+        const user = data.data.user;
+        const token = data.data.token;
 
-        return { success: true, user: data.data.user };
+        localStorage.setItem('token', token);
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+        return { success: true, user };
     } catch (error) {
         return { success: false, message: error.message };
     }
@@ -35,7 +37,7 @@ async function register(name, email, password) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, password, role: 'user' })
+            body: JSON.stringify({ full_name: name, email, password, role: 'user' })
         });
 
         const data = await response.json();
@@ -85,9 +87,6 @@ async function updateProfile(userData) {
             throw new Error(data.message || 'Error al actualizar perfil');
         }
 
-        // Actualizar usuario en localStorage
-        localStorage.setItem('loggedInUser', JSON.stringify(data.data));
-
         return { success: true, user: data.data };
     } catch (error) {
         return { success: false, message: error.message };
@@ -95,12 +94,12 @@ async function updateProfile(userData) {
 }
 
 // Change password
-async function changePassword(currentPassword, newPassword) {
+async function changePassword(currentPassword, newPassword, confirmPassword) {
     try {
         const response = await fetch(`${API_URL}/auth/me/password`, {
             method: 'PUT',
             headers: getAuthHeaders(),
-            body: JSON.stringify({ currentPassword, newPassword })
+            body: JSON.stringify({ current_password: currentPassword, new_password: newPassword, confirm_password: confirmPassword })
         });
 
         const data = await response.json();

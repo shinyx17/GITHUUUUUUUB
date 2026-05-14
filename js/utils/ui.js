@@ -54,6 +54,50 @@ function showAlert(message, type = 'danger') {
     }, 5000);
 }
 
+function showConfirmation(message) {
+    return new Promise((resolve) => {
+        const existing = document.querySelector('.confirm-alert');
+        if (existing) {
+            existing.remove();
+        }
+
+        const confirmDiv = document.createElement('div');
+        confirmDiv.className = 'alert alert-warning confirm-alert d-flex align-items-center justify-content-between';
+        confirmDiv.style.marginBottom = '16px';
+        confirmDiv.innerHTML = `
+            <div>${message}</div>
+        `;
+
+        const actions = document.createElement('div');
+        const confirmButton = document.createElement('button');
+        confirmButton.type = 'button';
+        confirmButton.className = 'btn btn-sm btn-danger me-2';
+        confirmButton.textContent = 'Confirmar';
+
+        const cancelButton = document.createElement('button');
+        cancelButton.type = 'button';
+        cancelButton.className = 'btn btn-sm btn-secondary';
+        cancelButton.textContent = 'Cancelar';
+
+        actions.appendChild(confirmButton);
+        actions.appendChild(cancelButton);
+        confirmDiv.appendChild(actions);
+
+        const container = document.querySelector('.container') || document.querySelector('main') || document.body;
+        container.insertBefore(confirmDiv, container.firstChild);
+
+        confirmButton.addEventListener('click', () => {
+            confirmDiv.remove();
+            resolve(true);
+        });
+
+        cancelButton.addEventListener('click', () => {
+            confirmDiv.remove();
+            resolve(false);
+        });
+    });
+}
+
 // Validate email format
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

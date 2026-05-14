@@ -6,15 +6,34 @@ function getAuthHeaders() {
     };
 }
 
+function normalizeUser(user) {
+    if (!user) return null;
+    return {
+        ...user,
+        name: user.name || user.full_name || user.fullName || '',
+        email: user.email || '',
+        role: user.role || ''
+    };
+}
+
+function setLoggedInUser(user) {
+    localStorage.setItem('loggedInUser', JSON.stringify(normalizeUser(user)));
+}
+
 // Función para verificar si el usuario está autenticado
 function isAuthenticated() {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem('token');
 }
 
 // Función para obtener el usuario logueado desde localStorage
 function getLoggedInUser() {
     const user = localStorage.getItem('loggedInUser');
-    return user ? JSON.parse(user) : null;
+    try {
+        return user ? normalizeUser(JSON.parse(user)) : null;
+    } catch (error) {
+        localStorage.removeItem('loggedInUser');
+        return null;
+    }
 }
 
 // Función para logout
@@ -25,17 +44,26 @@ function logout() {
 }
 
 // Función para verificar rol y redirigir si no tiene acceso
-function checkRoleAccess(requiredRole) {
+function requireRole(allowedRoles) {
+    if (typeof allowedRoles === 'string') {
+        allowedRoles = [allowedRoles];
+    }
+
     if (!isAuthenticated()) {
-        window.location.href = 'login.html';
+        logout();
         return false;
     }
 
     const user = getLoggedInUser();
-    if (!user || user.role !== requiredRole) {
-        window.location.href = 'login.html';
+    if (!user || !allowedRoles.includes(user.role)) {
+        logout();
         return false;
     }
 
     return true;
+}
+
+// Función para verificar rol y redirigir si no tiene acceso
+function checkRoleAccess(requiredRole) {
+    return requireRole(requiredRole);
 }

@@ -49,8 +49,8 @@ function validateUserPayload(payload = {}, { partial = false, forceRole = null }
   const errors = {};
   const data = {};
 
-  if (!partial || payload.full_name !== undefined) {
-    const fullName = String(payload.full_name || '').trim();
+  if (!partial || payload.full_name !== undefined || payload.name !== undefined) {
+    const fullName = String(payload.full_name || payload.name || '').trim();
 
     if (!fullName) {
       errors.full_name = 'El nombre completo es obligatorio.';
